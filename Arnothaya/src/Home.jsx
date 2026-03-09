@@ -104,6 +104,19 @@ function Home() {
             <p className="text-white/90 text-xl mb-6">
               Your premier destination for blockbuster movies, premium viewing experience, and unforgettable moments
             </p>
+            {/* YouTube Video Embed */}
+            <div className="mb-6 rounded-lg overflow-hidden">
+              <iframe 
+                width="100%" 
+                height="200" 
+                src="https://www.youtube.com/embed/7IfTRP3z1eY" 
+                title="Arnothaya Cinemax" 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen
+                className="rounded-lg"
+              ></iframe>
+            </div>
             <button 
               onClick={handleExploreClick}
               className="flex items-center gap-2 px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-lg"

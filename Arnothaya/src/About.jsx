@@ -143,6 +143,19 @@ function About() {
                   </p>
                 );
               })}
+              {/* YouTube Video Embed */}
+              <div className="mb-6 rounded-lg overflow-hidden">
+                <iframe 
+                  width="100%" 
+                  height="200" 
+                  src="https://www.youtube.com/embed/7IfTRP3z1eY" 
+                  title="Arnothaya Cinemax" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                  className="rounded-lg"
+                ></iframe>
+              </div>
               <ExploreMore />
             </div>
           </div>

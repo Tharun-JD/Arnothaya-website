@@ -141,6 +141,9 @@ Combined with high-quality cinema screens and comfortable seating, the Dolby Atm
 The 4K laser projection ensures brighter screens and more accurate color reproduction compared to traditional projectors. Every detail on the screen becomes more visible, making action scenes, landscapes, and visual effects appear more realistic and engaging.
 Combined with comfortable seating and immersive sound systems, the 4K laser projection at Arnothaya Cinemax enhances the overall movie experience, allowing visitors to enjoy films with outstanding visual clarity and brilliance. 🎬✨
               </p>
+              <Link to="/book" className="inline-block mt-4 px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors">
+                Book Your Movie Ticket
+              </Link>
             </div>
           </div>
 

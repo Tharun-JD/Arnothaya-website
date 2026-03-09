@@ -5,6 +5,7 @@ import About from './About';
 import Cinema from './Cinema';
 import Location from './Location';
 import OurServices from './Our Services';
+import BookTickets from './Book tickets';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/cinema" element={<Cinema />} />
         <Route path="/location" element={<Location />} />
         <Route path="/ourservices" element={<OurServices />} />
+        <Route path="/book" element={<BookTickets />} />
       </Routes>
     </Router>
   );
