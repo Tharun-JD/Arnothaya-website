@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+/* Roman-style serif font for all pages */
+body {
+  font-family: 'Times New Roman', Times, Georgia, 'Playfair Display', serif;
+}
+
+/* Apply serif font to all text elements */
+* {
+  font-family: 'Times New Roman', Times, Georgia, 'Playfair Display', serif;
+}
+
+h1, h2, h3, h4, h5, h6, p, span, button, a, li {
+  font-family: 'Times New Roman', Times, Georgia, 'Playfair Display', serif !important;
+}
