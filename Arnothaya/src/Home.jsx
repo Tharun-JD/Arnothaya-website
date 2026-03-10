@@ -47,7 +47,7 @@ function Home() {
   return (
     <div className="min-h-screen relative overflow-hidden text-white selection:bg-red-600 selection:text-white">
       {/* Navigation */}
-      <nav className="nav-bar fixed top-0 left-0 right-0 z-50 bg-black/80 py-4 transition-all duration-700 opacity-100">
+      <nav className="nav-bar fixed top-0 left-0 right-0 z-50 py-4 transition-all duration-700 opacity-100">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           <div className="flex items-center">
             <img src={logo} alt="Logo" className="h-10 md:h-12 w-auto animate-pulse transition-transform duration-300 hover:scale-105" />
