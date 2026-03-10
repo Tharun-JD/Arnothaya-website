@@ -1,15 +1,80 @@
 @import "tailwindcss";
 
-/* Roman-style serif font for all pages */
+/* Premium Outfit font for all pages */
 body {
-  font-family: 'Times New Roman', Times, Georgia, 'Playfair Display', serif;
+  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  background-color: black !important;
+  color: white !important;
 }
 
-/* Apply serif font to all text elements */
+/* Apply chosen font to all text elements */
 * {
-  font-family: 'Times New Roman', Times, Georgia, 'Playfair Display', serif;
+  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6, p, span, button, a, li {
-  font-family: 'Times New Roman', Times, Georgia, 'Playfair Display', serif !important;
+  font-family: 'Outfit', system-ui, -apple-system, sans-serif !important;
+}
+
+/* Global Animation Keyframes */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.6); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Animation utility classes */
+.animateFloat {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animatePulseGlow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.animateSlideUp {
+  animation: slideUp 0.6s ease-out forwards;
+}
+
+.animateFadeIn {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animateScaleIn {
+  animation: scaleIn 0.5s ease-out forwards;
+}
+
+/* Stagger animation delays */
+.delay100 { animation-delay: 0.1s; }
+.delay200 { animation-delay: 0.2s; }
+.delay300 { animation-delay: 0.3s; }
+.delay400 { animation-delay: 0.4s; }
+.delay500 { animation-delay: 0.5s; }
+
+/* Hide scrollbar utility */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

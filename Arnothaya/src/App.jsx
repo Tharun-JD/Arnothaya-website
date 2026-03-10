@@ -2,22 +2,24 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import About from './About';
-import Cinema from './Cinema';
-import Location from './Location';
-import OurServices from './Our Services';
-import BookTickets from './Book tickets';
+import OurServices from './OurServices';
+import BookTickets from './BookTickets';
+import ParkingTicket from './ParkingTicket';
+import ContactUs from './ContactUs';
+import ParticleBackground from './ParticleBackground';
 
 function App() {
   return (
     <Router>
+      <ParticleBackground />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/cinema" element={<Cinema />} />
-        <Route path="/location" element={<Location />} />
         <Route path="/ourservices" element={<OurServices />} />
-        <Route path="/book" element={<BookTickets />} />
+        <Route path="/booktickets" element={<BookTickets />} />
+        <Route path="/parking" element={<ParkingTicket />} />
+        <Route path="/contact" element={<ContactUs />} />
       </Routes>
     </Router>
   );

@@ -1,178 +1,157 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import gsap from 'gsap';
+import { Home as HomeIcon, Info, Phone, Wrench } from 'lucide-react';
 import logo from './assets/logo.png';
 import mall from './assets/mall.png';
 
 function Home() {
-  const [visible, setVisible] = useState(false);
-  const [showBottomContent, setShowBottomContent] = useState(true);
-  const [isExiting, setIsExiting] = useState(false);
   const navigate = useNavigate();
+  const contentRef = useRef(null);
 
   useEffect(() => {
-    setVisible(true);
-    // Refresh page on mount
     window.scrollTo(0, 0);
+    
+    // Floating animation
+    gsap.to(".floating-blob", {
+      y: -20,
+      duration: 2.5,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      stagger: 0.5
+    });
+
+    return () => {};
   }, []);
 
   const handleExploreClick = () => {
-    navigate('/about');
+    gsap.to(contentRef.current, {
+      y: 30,
+      opacity: 0,
+      duration: 0.4,
+      ease: "power2.in",
+      onComplete: () => {
+        navigate('/about');
+      }
+    });
   };
 
   const navItems = [
-    { name: 'Home', page: 'home', icon: '🏠' },
-    { name: 'About', page: 'about', icon: 'ℹ️' },
-    { name: 'Cinema', page: 'cinema', icon: '🎬' },
-    { name: 'Book Ticket', page: 'book', icon: '🎟️' },
-    { name: 'Location', page: 'location', icon: '📍' },
-    { name: 'Contact Us', page: 'contact', icon: '📞' }
+    { name: 'Home', page: 'home', icon: <HomeIcon className="w-5 h-5 md:w-6 md:h-6" /> },
+    { name: 'About', page: 'about', icon: <Info className="w-5 h-5 md:w-6 md:h-6" /> },
+    { name: 'Our Services', page: 'ourservices', icon: <Wrench className="w-5 h-5 md:w-6 md:h-6" /> },
+    { name: 'Contact Us', page: 'contact', icon: <Phone className="w-5 h-5 md:w-6 md:h-6" /> }
   ];
 
   return (
-    <div 
-      className="min-h-screen bg-black"
-      style={{
-        backgroundImage: `url(${mall})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed'
-      }}
-    >
-      {/* Navigation Bar - Transparent without border */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-sm py-2">
-        <div className="px-4 flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center">
-            <img src={logo} alt="Logo" className="h-10 w-auto" />
-          </div>
+    <div className="min-h-screen relative overflow-hidden text-white selection:bg-red-600 selection:text-white">
+      {/* Background radial glow instead of solid color */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0,transparent_100%)]"></div>
 
-          {/* Navigation Buttons - No border, gold text on hover */}
-          <div className="flex items-center gap-4 flex-wrap justify-center">
-            {navItems.map((item, index) => (
+      {/* Decorative Blobs */}
+      <div className="floating-blob fixed top-20 left-10 w-32 h-32 bg-amber-500/10 rounded-full blur-3xl pointer-events-none z-0"></div>
+      <div className="floating-blob fixed bottom-40 right-20 w-48 h-48 bg-red-600/10 rounded-full blur-3xl pointer-events-none z-0"></div>
+
+      {/* Navigation */}
+      <nav className="nav-bar fixed top-0 left-0 right-0 z-50 bg-black/80 py-4 transition-all duration-700 opacity-100">
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+          <div className="flex items-center">
+            <img src={logo} alt="Logo" className="h-10 md:h-12 w-auto animate-pulse transition-transform duration-300 hover:scale-105" />
+          </div>
+          <div className="flex items-center gap-2 md:gap-4">
+            {navItems.map((item) => (
               <Link 
                 key={item.page}
                 to={'/' + item.page}
-                className="px-4 py-2 bg-transparent text-white hover:text-yellow-400 font-semibold rounded-lg transition-all duration-300 transform hover:scale-110 flex items-center gap-2"
-                style={{ 
-                  animation: `fadeIn 0.5s ease-out ${index * 0.1}s both`
-                }}
+                className="px-4 py-2 hover:text-yellow-400 font-bold transition-all duration-300 flex items-center gap-2 text-sm md:text-base group"
               >
-                <span className="text-lg">{item.icon}</span>
-                <span>{item.name}</span>
+                <span className="group-hover:scale-125 transition-transform duration-300">{item.icon}</span>
+                <span className="hidden sm:inline uppercase tracking-widest">{item.name}</span>
               </Link>
             ))}
           </div>
         </div>
       </nav>
 
-      {/* Hero Section - With Colored Text and Animations
-      <div className={`flex flex-col items-center justify-center min-h-screen text-center px-4 transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <h1 
-          className="text-5xl md:text-7xl font-bold text-red-500 mb-4 drop-shadow-lg"
-          style={{ animation: 'bounceIn 1s ease-out' }}
-        >
-          Welcome to Arnothaya
-        </h1>
-        <p 
-          className="text-xl md:text-2xl text-yellow-400 mb-8 drop-shadow-md"
-          style={{ animation: 'fadeInUp 1s ease-out 0.3s both' }}
-        >
-          Experience the best cinema and entertainment
-        </p>
-        <p 
-          className="text-lg md:text-xl text-white/80 max-w-2xl"
-          style={{ animation: 'fadeInUp 1s ease-out 0.6s both' }}
-        >
-          Your premier destination for blockbuster movies, premium viewing experience, and unforgettable moments
-        </p>
-      </div> */}
-
-      {/* Bottom Left Content - Slide Up Animation */}
-      {showBottomContent && (
-        <div 
-          className={`absolute bottom-20 left-4 md:left-10 max-w-xl lg:max-w-2xl transition-all duration-700 ${isExiting ? 'slideOutDown' : 'slideInUp'}`}
-          style={{ animationDelay: '1s' }}
-        >
-          <div className="bg-black/70 backdrop-blur-sm p-8 rounded-2xl border border-white/20 items-center justify-center">
-            <h2 className="text-4xl md:text-5xl font-bold text-red-500 mb-4">
-              Welcome to Arnothaya
-            </h2>
-            <p className="text-yellow-400 text-2xl mb-4">
-              Experience the best cinema and entertainment
-            </p>
-            <p className="text-white/90 text-xl mb-6">
-              Your premier destination for blockbuster movies, premium viewing experience, and unforgettable moments
-            </p>
-            {/* YouTube Video Embed */}
-            <div className="mb-6 rounded-lg overflow-hidden">
-              <iframe 
-                width="100%" 
-                height="200" 
-                src="https://www.youtube.com/embed/7IfTRP3z1eY" 
-                title="Arnothaya Cinemax" 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowFullScreen
-                className="rounded-lg"
-              ></iframe>
+      {/* Hero Section - Redesigned Grid Layout */}
+      <div className="relative z-10 min-h-screen flex items-center pt-24 pb-12 px-6 md:px-12">
+        <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          
+          {/* Left Side: Hero Text */}
+          <div 
+            ref={contentRef}
+            className="opacity-100 translate-y-0"
+          >
+            <div className="inline-block px-4 py-1.5 bg-red-600/10 border border-red-600/30 text-red-500 rounded-full text-sm font-black uppercase tracking-widest mb-8 shadow-[0_0_20px_rgba(220,38,38,0.2)]">
+              Welcome to the Future
             </div>
-            <button 
-              onClick={handleExploreClick}
-              className="flex items-center gap-2 px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-lg"
-            >
-              <span>Explore More</span>
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                className="h-6 w-6 transition-transform duration-300 group-hover:translate-x-1"
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-                strokeWidth={2}
+            
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black mb-6 leading-[0.9] tracking-tighter">
+              Arnothaya <br/>
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-red-600 via-yellow-500 to-red-600 animatePulseGlow">
+                Cinemax.
+              </span>
+            </h1>
+            
+            <p className="text-xl md:text-2xl text-gray-400 font-medium mb-10 leading-relaxed max-w-xl">
+              Your ultimate destination for <span className="text-yellow-400 font-bold underline decoration-red-600 decoration-4">unrivaled cinematic excellence</span>. Experience earth-shaking sound, 4K laser clarity, and world-class luxury.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button 
+                onClick={handleExploreClick}
+                className="px-10 py-5 bg-red-600 hover:bg-red-700 text-white font-black rounded-2xl transition-all duration-300 transform hover:scale-[1.05] shadow-[0_10px_30px_rgba(220,38,38,0.4)] text-lg uppercase tracking-widest flex items-center justify-center gap-3"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </button>
+                Explore Us
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </button>
+            </div>
           </div>
-        </div>
-      )}
 
-      {/* Scroll Indicator
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-8 h-12 border-4 border-white/50 rounded-full flex justify-center pt-2">
-          <div className="w-2 h-3 bg-white rounded-full"></div>
-        </div>
-      </div> */}
+          {/* Right Side: Inline Mall Image (Redesigned) */}
+          <div className="relative hidden lg:block perspective-1000">
+            {/* Glowing Backdrop */}
+            <div className="absolute inset-0 bg-linear-to-tr from-red-600 to-yellow-500 rounded-[3rem] blur-3xl opacity-20 animatePulseGlow"></div>
+            
+            {/* Main Image */}
+            <img 
+              src={mall} 
+              alt="Arnothaya Mall" 
+              className="relative w-full aspect-[4/5] object-cover rounded-[3rem] border-2 border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform -rotate-y-6 hover:rotate-y-0 transition-transform duration-700"
+            />
+            
+            {/* Floating Glass Badge 1 Left */}
+            <div className="absolute -bottom-8 -left-8 bg-black/80 backdrop-blur-xl p-6 rounded-3xl border border-white/10 shadow-2xl animateFloat">
+              <div className="flex items-center gap-5">
+                <div className="w-14 h-14 bg-red-600 rounded-2xl flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-red-600/40">
+                  5+
+                </div>
+                <div>
+                  <p className="text-white font-black text-xl">Premium</p>
+                  <p className="text-gray-400 font-bold text-xs uppercase tracking-widest">Cinema Screens</p>
+                </div>
+              </div>
+            </div>
 
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes bounceIn {
-          0% { transform: scale(0.5); opacity: 0; }
-          50% { transform: scale(1.1); }
-          100% { transform: scale(1); opacity: 1; }
-        }
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideInUp {
-          from { opacity: 0; transform: translateY(50px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideOutDown {
-          from { opacity: 1; transform: translateY(0); }
-          to { opacity: 0; transform: translateY(50px); }
-        }
-        .slideInUp {
-          animation: slideInUp 0.7s ease-out forwards;
-        }
-        .slideOutDown {
-          animation: slideOutDown 0.5s ease-in forwards;
-        }
-      `}</style>
+            {/* Floating Glass Badge 2 Right */}
+            <div className="absolute -top-8 -right-8 bg-black/80 backdrop-blur-xl p-6 rounded-3xl border border-white/10 shadow-2xl animateFloat" style={{ animationDelay: '1s' }}>
+              <div className="flex items-center gap-5">
+                <div className="w-14 h-14 bg-yellow-400 rounded-2xl flex items-center justify-center text-black font-black text-2xl shadow-lg shadow-yellow-400/40">
+                  ★
+                </div>
+                <div>
+                  <p className="text-white font-black text-xl">4.9/5</p>
+                  <p className="text-gray-400 font-bold text-xs uppercase tracking-widest">User Rating</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
   );
 }
