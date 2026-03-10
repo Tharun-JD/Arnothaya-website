@@ -36,13 +36,7 @@ function About() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-yellow-400 selection:text-black">
-      {/* Global CSS Dark Background for About Page */}
-      <div className="fixed inset-0 bg-black z-[-1]">
-        <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,rgba(220,38,38,0.08)_0,transparent_60%)]"></div>
-        <div className="absolute bottom-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_bottom_left,rgba(234,179,8,0.08)_0,transparent_60%)]"></div>
-      </div>
-
+    <div className="min-h-screen bg-transparent text-white selection:bg-yellow-400 selection:text-black">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/60 backdrop-blur-md py-3 transition-opacity duration-700 opacity-100 line-border-b border-white/5">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">

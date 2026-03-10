@@ -40,7 +40,7 @@ function ContactUs() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-yellow-400 selection:text-black">
+    <div className="min-h-screen bg-transparent text-white selection:bg-yellow-400 selection:text-black">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/60 backdrop-blur-md py-3 transition-opacity duration-700 opacity-100">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
@@ -61,12 +61,6 @@ function ContactUs() {
           </div>
         </div>
       </nav>
-
-      {/* Global CSS Dark Background */}
-      <div className="fixed inset-0 bg-black z-[-1]">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(234,179,8,0.05)_0,transparent_50%)]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(220,38,38,0.05)_0,transparent_50%)]"></div>
-      </div>
 
       <div className="min-h-screen relative flex items-center pt-32 pb-12">
         

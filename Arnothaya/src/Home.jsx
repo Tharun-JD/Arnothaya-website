@@ -46,13 +46,6 @@ function Home() {
 
   return (
     <div className="min-h-screen relative overflow-hidden text-white selection:bg-red-600 selection:text-white">
-      {/* Background radial glow instead of solid color */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0,transparent_100%)]"></div>
-
-      {/* Decorative Blobs */}
-      <div className="floating-blob fixed top-20 left-10 w-32 h-32 bg-amber-500/10 rounded-full blur-3xl pointer-events-none z-0"></div>
-      <div className="floating-blob fixed bottom-40 right-20 w-48 h-48 bg-red-600/10 rounded-full blur-3xl pointer-events-none z-0"></div>
-
       {/* Navigation */}
       <nav className="nav-bar fixed top-0 left-0 right-0 z-50 bg-black/80 py-4 transition-all duration-700 opacity-100">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">

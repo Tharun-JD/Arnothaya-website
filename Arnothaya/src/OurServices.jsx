@@ -179,7 +179,7 @@ function OurServices() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-yellow-400 selection:text-black pb-40">
+    <div className="min-h-screen bg-transparent text-white selection:bg-yellow-400 selection:text-black pb-40">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-40 bg-black/60 backdrop-blur-md py-3 transition-opacity duration-700 opacity-100">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
@@ -200,12 +200,6 @@ function OurServices() {
           </div>
         </div>
       </nav>
-
-      {/* Global CSS Dark Background */}
-      <div className="fixed inset-0 bg-black z-[-1]">
-        <div className="absolute top-0 inset-x-0 h-[60vh] bg-[radial-gradient(ellipse_at_top,rgba(234,179,8,0.12)_0,transparent_70%)]"></div>
-        <div className="absolute bottom-0 inset-x-0 h-[40vh] bg-[radial-gradient(ellipse_at_bottom,rgba(220,38,38,0.1)_0,transparent_70%)]"></div>
-      </div>
 
       {/* Hero Header */}
       <div className="relative pt-32 pb-16 flex items-center justify-center">

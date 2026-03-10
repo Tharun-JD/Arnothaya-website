@@ -246,7 +246,7 @@ function BookTickets() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-red-500 selection:text-white">
+    <div className="min-h-screen bg-transparent text-white selection:bg-red-500 selection:text-white">
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md py-3 print:hidden">
         <div className="px-6 flex items-center justify-between max-w-7xl mx-auto">
           <div className="flex items-center">
@@ -280,11 +280,6 @@ function BookTickets() {
           </div>
         </div>
       </nav>
-
-      {/* Global CSS Dark Background */}
-      <div className="fixed inset-0 bg-black z-[-1] print:hidden">
-        <div className="absolute top-0 inset-x-0 h-[60vh] bg-[radial-gradient(ellipse_at_top,rgba(220,38,38,0.12)_0,transparent_70%)]"></div>
-      </div>
 
       <div ref={heroRef} className="relative pt-32 pb-8 overflow-hidden print:hidden text-center">
         <div className="inline-block px-4 py-1.5 bg-red-600/10 border border-red-600/30 text-red-500 rounded-full text-xs font-black uppercase tracking-widest mb-6 shadow-[0_0_20px_rgba(220,38,38,0.2)]">

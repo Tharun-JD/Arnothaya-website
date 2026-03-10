@@ -188,7 +188,7 @@ function ParkingTicket() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-yellow-400 selection:text-black">
+    <div className="min-h-screen bg-transparent text-white selection:bg-yellow-400 selection:text-black">
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md py-3 transition-all print:hidden">
         <div className="px-6 flex items-center justify-between max-w-7xl mx-auto">
           <div className="flex items-center">
@@ -215,11 +215,6 @@ function ParkingTicket() {
           </div>
         </div>
       </nav>
-
-      {/* Global CSS Dark Background */}
-      <div className="fixed inset-0 bg-black z-[-1] print:hidden">
-        <div className="absolute top-0 inset-x-0 h-[60vh] bg-[radial-gradient(ellipse_at_top,rgba(234,179,8,0.12)_0,transparent_70%)]"></div>
-      </div>
 
       <div ref={heroRef} className="relative pt-32 pb-8 overflow-hidden print:hidden text-center">
         <div className="inline-block px-4 py-1.5 bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 rounded-full text-xs font-black uppercase tracking-widest mb-6 shadow-[0_0_20px_rgba(234,179,8,0.2)]">
