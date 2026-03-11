@@ -33,36 +33,51 @@ function ContactUs() {
   };
 
   const navItems = [
-    { name: 'Home', page: 'home', icon: <Home className="w-5 h-5 md:w-6 md:h-6" /> },
-    { name: 'About', page: 'about', icon: <Info className="w-5 h-5 md:w-6 md:h-6" /> },
-    { name: 'Our Services', page: 'ourservices', icon: <Wrench className="w-5 h-5 md:w-6 md:h-6" /> },
-    { name: 'Contact Us', page: 'contact', icon: <Phone className="w-5 h-5 md:w-6 md:h-6" /> }
+    { name: 'Home', page: 'home' },
+    { name: 'About Us', page: 'about' },
+    { name: 'Our Services', page: 'ourservices' },
+    { name: 'Book Tickets', page: 'booktickets' },
+    { name: 'Parking', page: 'parkingticket' }
   ];
 
   return (
     <div className="min-h-screen bg-transparent text-white selection:bg-yellow-400 selection:text-black">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/60 backdrop-blur-md py-3 transition-opacity duration-700 opacity-100">
+      <nav className="fixed top-0 left-0 right-0 z-50 py-4 bg-white/90 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           <div className="flex items-center">
-            <img src={logo} alt="Logo" className="h-12 w-auto" />
+            <img src={logo} alt="Logo" className="h-10 md:h-12 w-auto transition-transform duration-300 hover:scale-105" />
           </div>
-          <div className="flex items-center gap-2 md:gap-6">
+          <div className="flex items-center gap-2 md:gap-8">
             {navItems.map((item) => (
               <Link 
                 key={item.page}
                 to={'/' + item.page}
-                className="px-4 py-2 text-white hover:text-yellow-400 font-bold transition-all duration-300 flex items-center gap-2 text-sm md:text-base"
+                className="px-4 py-2 text-gray-800 hover:text-gray-600 font-semibold transition-all duration-300 text-sm md:text-base uppercase tracking-widest"
               >
-                <span>{item.icon}</span>
-                <span className="hidden sm:inline">{item.name}</span>
+                {item.name}
               </Link>
             ))}
+            <Link 
+              to="/booktickets"
+              className="px-8 py-3 bg-green-700 hover:bg-green-800 text-white font-bold transition-all duration-300 text-sm md:text-base uppercase tracking-widest"
+            >
+              Book Now
+            </Link>
           </div>
         </div>
       </nav>
 
       <div className="min-h-screen relative flex items-center pt-32 pb-12">
+        {/* Background Image */}
+        <div className="absolute inset-0 h-screen bg-gray-900">
+          <img 
+            src={mall} 
+            alt="Contact Us" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent"></div>
+        </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full py-20">
           <div className="text-center mb-16 transition-all duration-1000 opacity-100 translate-y-0">

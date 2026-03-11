@@ -16,40 +16,12 @@ import salon from './assets/head.png';
 import gamingZone from './assets/gaming_zone.png';
 
 function OurServices() {
-  const [activeIndex, setActiveIndex] = useState(0);
   const [selectedService, setSelectedService] = useState(null);
-  const scrollContainerRef = useRef(null);
   const modalRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const handleScroll = () => {
-    if (scrollContainerRef.current) {
-      const scrollLeft = scrollContainerRef.current.scrollLeft;
-      const width = scrollContainerRef.current.offsetWidth;
-      const index = Math.round(scrollLeft / 412); // Card width (380) + Gap (32)
-      setActiveIndex(index);
-    }
-  };
-
-  const scrollToIndex = (index) => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = index * 412;
-      scrollContainerRef.current.scrollTo({ left: scrollAmount, behavior: 'smooth' });
-      setActiveIndex(index);
-    }
-  };
-
-  useEffect(() => {
-    if (selectedService && modalRef.current) {
-      gsap.fromTo(modalRef.current, 
-        { scale: 0.9, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.4, ease: "power2.out" }
-      );
-    }
-  }, [selectedService]);
 
   const services = [
     { 
@@ -117,84 +89,38 @@ function OurServices() {
     }
   ];
 
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -412, behavior: 'smooth' });
-    }
-  };
-
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 412, behavior: 'smooth' });
-    }
-  };
-
-  const movieBtnRef = useRef(null);
-  const parkingBtnRef = useRef(null);
-
   useEffect(() => {
-    // Entrance Animation - Using fromTo for absolute visibility guarantee
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-    
-    // Set initial state explicitly
-    gsap.set([movieBtnRef.current, parkingBtnRef.current], { opacity: 0, y: 50 });
-
-    tl.to([movieBtnRef.current, parkingBtnRef.current], {
-      y: 0,
-      opacity: 1,
-      duration: 0.6,
-      stagger: 0.1,
-      delay: 0.2, // Faster arrival
-      onComplete: () => {
-        // Continuous Floating Animation - Start only after entrance
-        if (movieBtnRef.current) {
-          gsap.to(movieBtnRef.current, {
-            y: -10,
-            duration: 2,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut"
-          });
-        }
-
-        if (parkingBtnRef.current) {
-          gsap.to(parkingBtnRef.current, {
-            y: -10,
-            duration: 2,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
-            delay: 0.5
-          });
-        }
-      }
-    });
-  }, []);
+    if (selectedService && modalRef.current) {
+      gsap.fromTo(modalRef.current, 
+        { scale: 0.9, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.4, ease: "power2.out" }
+      );
+    }
+  }, [selectedService]);
 
   const navItems = [
-    { name: 'Home', page: 'home', icon: <Home className="w-5 h-5 md:w-6 md:h-6" /> },
-    { name: 'About', page: 'about', icon: <Info className="w-5 h-5 md:w-6 md:h-6" /> },
-    { name: 'Our Services', page: 'ourservices', icon: <Wrench className="w-5 h-5 md:w-6 md:h-6" /> },
-    { name: 'Contact Us', page: 'contact', icon: <Phone className="w-5 h-5 md:w-6 md:h-6" /> }
+    { name: 'About Us', page: 'about' },
+    { name: 'Our Services', page: 'ourservices' },
+    { name: 'Book Tickets', page: 'booktickets' },
+    { name: 'Contact Us', page: 'contact' }
   ];
 
   return (
-    <div className="min-h-screen bg-transparent text-white selection:bg-yellow-400 selection:text-black pb-40">
+    <div className="min-h-screen bg-white text-gray-900 pb-20">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-40 bg-black/60 backdrop-blur-md py-3 transition-opacity duration-700 opacity-100">
+      <nav className="fixed top-0 left-0 right-0 z-50 py-4 bg-white/90 backdrop-blur-sm shadow-md">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           <div className="flex items-center">
-            <img src={logo} alt="Logo" className="h-12 w-auto" />
+            <img src={logo} alt="Logo" className="h-10 md:h-12 w-auto transition-transform duration-300 hover:scale-105" />
           </div>
-          <div className="flex items-center gap-2 md:gap-6">
+          <div className="flex items-center gap-2 md:gap-8">
             {navItems.map((item) => (
               <Link 
                 key={item.page}
                 to={'/' + item.page}
-                className="px-4 py-2 text-white hover:text-yellow-400 font-bold transition-all duration-300 flex items-center gap-2 text-sm md:text-base"
+                className="px-4 py-2 text-gray-800 hover:text-green-700 font-semibold transition-all duration-300 text-sm md:text-base uppercase tracking-widest"
               >
-                <span>{item.icon}</span>
-                <span className="hidden sm:inline">{item.name}</span>
+                {item.name}
               </Link>
             ))}
           </div>
@@ -202,15 +128,25 @@ function OurServices() {
       </nav>
 
       {/* Hero Header */}
-      <div className="relative pt-32 pb-16 flex items-center justify-center">
+      <div className="relative h-[60vh] flex items-center justify-center">
+        {/* Background Image */}
+        <div className="absolute inset-0 h-[60vh] bg-gray-900">
+          <img 
+            src={mall} 
+            alt="Arnothaya Services" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent"></div>
+        </div>
+        
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <div className="inline-block px-4 py-1.5 bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 rounded-full text-xs font-black uppercase tracking-widest mb-6 shadow-[0_0_20px_rgba(234,179,8,0.2)]">
             Explore Offerings
           </div>
-          <h1 className="text-5xl md:text-7xl font-black mb-6 text-transparent bg-clip-text bg-linear-to-r from-yellow-400 to-red-600 leading-tight uppercase tracking-tighter animatePulseGlow">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight uppercase tracking-tighter">
             Our Services
           </h1>
-          <p className="text-xl md:text-2xl text-gray-400 leading-relaxed max-w-3xl mx-auto font-medium">
+          <p className="text-lg md:text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto font-medium">
             Welcome to Arnothaya Cinemax - Your Premier Entertainment Destination in Palladam. 
             Experience the perfect blend of cinema, dining, shopping, and fun all under one roof.
           </p>
@@ -220,72 +156,104 @@ function OurServices() {
       {/* Main Content Area */}
       <div className="py-24 px-6 relative z-10">
         <div className="max-w-7xl mx-auto">
+          {/* Section Title */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-yellow-400">What We Offer</h2>
-            <p className="text-white/50 mt-4 uppercase tracking-[0.3em] font-black text-sm">Click any service to view highlights</p>
-            <div className="h-1 w-24 bg-red-600 mx-auto mt-4 rounded-full"></div>
+            <h2 className="text-4xl md:text-5xl font-bold text-green-700 uppercase tracking-widest">
+              Explore Every Kind<br />Of Service We Offer
+            </h2>
+            <div className="flex items-center justify-center gap-4 mt-4">
+              <div className="h-px w-24 bg-green-700"></div>
+              <div className="h-4 w-4 rotate-45 border-2 border-green-700"></div>
+              <div className="h-px w-24 bg-green-700"></div>
+            </div>
+            <p className="text-gray-600 mt-6 text-lg">
+              Each service offers a perfect blend of comfort, elegance, and functionality, designed to enhance your entertainment experience.
+            </p>
           </div>
 
-          <div className="relative group">
-            <button 
-              onClick={scrollLeft}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-yellow-400 hover:bg-yellow-500 text-black p-4 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 -translate-x-6 cursor-pointer"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            
-            <button 
-              onClick={scrollRight}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-yellow-400 hover:bg-yellow-500 text-black p-4 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 translate-x-6 cursor-pointer"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-            
-            <div 
-              ref={scrollContainerRef}
-              onScroll={handleScroll}
-              className="flex gap-8 overflow-x-auto pb-12 scroll-smooth scrollbar-hide px-4"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-            >
-              {services.map((service, i) => (
-                <div 
-                  key={i}
-                  onClick={() => setSelectedService(service)}
-                  className="bg-gray-900/50 backdrop-blur-md rounded-3xl overflow-hidden border border-white/5 hover:border-yellow-400/50 transition-all duration-500 min-w-[320px] md:min-w-[380px] group/card shadow-xl cursor-pointer hover:scale-[1.02]"
-                >
-                  <div className="aspect-video overflow-hidden relative">
-                    <img src={service.img} alt={service.title} className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700" />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <span className="px-6 py-2 bg-yellow-400 text-black font-black uppercase tracking-widest text-sm rounded-full">View Highlights</span>
+          {/* Services Grid */}
+          <div className="space-y-24">
+            {services.map((service, index) => (
+              <div key={index} className={`flex flex-col ${index % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} gap-12 items-center`}>
+                {/* Image */}
+                <div className="w-full md:w-1/2 relative group">
+                  <div className="aspect-video overflow-hidden rounded-lg shadow-xl">
+                    <img 
+                      src={service.img} 
+                      alt={service.title} 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-md">
+                    <span className="font-bold text-green-700 uppercase text-sm">{service.title}</span>
+                    <div className="flex items-center gap-1 mt-1">
+                      {[...Array(5)].map((_, i) => (
+                        <span key={i} className="text-yellow-500">★</span>
+                      ))}
                     </div>
                   </div>
-                  <div className="p-8">
-                    <h3 className="text-2xl font-bold text-yellow-400 mb-4">{service.title}</h3>
-                    <p className="text-white/70 leading-relaxed text-lg line-clamp-3">{service.desc}</p>
-                  </div>
                 </div>
-              ))}
-            </div>
 
-            {/* Pagination Dots (Circles) */}
-            <div className="flex justify-center items-center gap-3 mt-4">
-              {services.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => scrollToIndex(i)}
-                  className={`h-3 rounded-full transition-all duration-500 cursor-pointer ${
-                    activeIndex === i 
-                      ? 'w-8 bg-yellow-400 shadow-[0_0_10px_rgba(234,179,8,0.5)]' 
-                      : 'w-3 bg-white/20 hover:bg-white/40'
-                  }`}
-                  aria-label={`Go to service ${i + 1}`}
-                />
-              ))}
+                {/* Content */}
+                <div className="w-full md:w-1/2">
+                  <h3 className="text-3xl md:text-4xl font-bold text-green-700 mb-6 uppercase tracking-wide">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600 text-lg mb-8 leading-relaxed">
+                    {service.desc}
+                  </p>
+                  <ul className="space-y-4 mb-8">
+                    {service.highlights.slice(0, 3).map((highlight, idx) => (
+                      <li key={idx} className="flex items-start gap-3">
+                        <span className="text-green-700 font-bold mt-1">•</span>
+                        <span className="text-gray-700 font-semibold">{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <button 
+                    onClick={() => setSelectedService(service)}
+                    className="inline-block px-8 py-3 bg-green-700 hover:bg-green-800 text-white font-bold transition-all duration-300 uppercase tracking-widest rounded"
+                  >
+                    View Highlights
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Book Your Ticket Section */}
+          <div className="mt-32 py-20 bg-green-50 rounded-3xl">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold text-green-700 uppercase tracking-widest mb-4">
+                Book Your Ticket
+              </h2>
+              <p className="text-gray-600 text-lg">
+                Get your tickets now and enjoy a seamless entertainment experience
+              </p>
             </div>
+            <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
+              <Link 
+                to="/booktickets" 
+                className="px-12 py-6 bg-green-700 hover:bg-green-800 text-white font-bold text-xl uppercase tracking-widest rounded-lg shadow-lg transition-all duration-300 hover:scale-105 flex items-center gap-3"
+              >
+                <span className="text-2xl">🎬</span>
+                Movie Tickets
+              </Link>
+              <Link 
+                to="/parkingticket" 
+                className="px-12 py-6 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xl uppercase tracking-widest rounded-lg shadow-lg transition-all duration-300 hover:scale-105 flex items-center gap-3"
+              >
+                <span className="text-2xl">🅿️</span>
+                Parking Tickets
+              </Link>
+            </div>
+          </div>
+
+          {/* Decorative Divider */}
+          <div className="flex items-center justify-center gap-4 mt-24">
+            <div className="h-px w-24 bg-green-700"></div>
+            <div className="h-4 w-4 rotate-45 border-2 border-green-700"></div>
+            <div className="h-px w-24 bg-green-700"></div>
           </div>
 
           {/* Highlights Modal (Pop-up) */}
@@ -303,14 +271,14 @@ function OurServices() {
               
               <div 
                 ref={modalRef}
-                className="relative bg-gray-900 border border-white/20 rounded-4xl max-w-lg w-full overflow-hidden shadow-[0_0_50px_rgba(234,179,8,0.2)] z-10"
+                className="relative bg-white border border-gray/20 rounded-4xl max-w-lg w-full overflow-hidden shadow-[0_0_50px_rgba(34,197,94,0.2)] z-10"
               >
                 <div className="relative aspect-video">
                   <img src={selectedService.img} alt={selectedService.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-transparent to-transparent"></div>
+                  <div className="absolute inset-0 bg-linear-to-t from-white via-transparent to-transparent"></div>
                   
                   {/* Timing Badge over Image */}
-                  <div className="absolute bottom-4 left-6 px-4 py-2 bg-yellow-400 text-black font-black rounded-xl text-xs flex items-center gap-2 shadow-2xl">
+                  <div className="absolute bottom-4 left-6 px-4 py-2 bg-green-700 text-white font-black rounded-xl text-xs flex items-center gap-2 shadow-2xl">
                     <span>🕒</span>
                     <span>{selectedService.timing}</span>
                   </div>
@@ -330,51 +298,31 @@ function OurServices() {
                 
                 <div className="p-8">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="inline-block px-3 py-1 bg-yellow-400/10 text-yellow-400 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border border-yellow-400/20">
+                    <div className="inline-block px-3 py-1 bg-green-700/10 text-green-700 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border border-green-700/20">
                       Service Highlight
                     </div>
                   </div>
                   
-                  <h3 className="text-3xl font-black text-white mb-6 uppercase tracking-tight italic">
+                  <h3 className="text-3xl font-black text-gray-900 mb-6 uppercase tracking-tight italic">
                     {selectedService.title}
                   </h3>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {selectedService.highlights.map((point, idx) => (
-                      <div key={idx} className="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/5 hover:border-yellow-400/30 transition-colors group">
-                        <div className="w-1.5 h-1.5 bg-red-600 rounded-full group-hover:bg-yellow-400 transition-colors"></div>
-                        <span className="font-bold text-white/80 text-[11px] tracking-wide">{point}</span>
+                      <div key={idx} className="flex items-center gap-3 bg-gray/5 p-3 rounded-xl border border-gray/5 hover:border-green-700/30 transition-colors group">
+                        <div className="w-1.5 h-1.5 bg-red-600 rounded-full group-hover:bg-green-700 transition-colors"></div>
+                        <span className="font-bold text-gray/80 text-[11px] tracking-wide">{point}</span>
                       </div>
                     ))}
                   </div>
 
-                  <p className="mt-6 text-white/40 text-[11px] leading-relaxed border-t border-white/10 pt-6 italic">
+                  <p className="mt-6 text-gray/40 text-[11px] leading-relaxed border-t border-gray/10 pt-6 italic">
                     {selectedService.desc}
                   </p>
                 </div>
               </div>
             </div>
           )}
-
-          {/* Guaranteed Booking Button Section */}
-          <div className="mt-24 flex flex-col sm:flex-row justify-center items-center gap-8 relative z-20 pb-12">
-            <Link 
-              ref={movieBtnRef}
-              to="/booktickets" 
-              className="w-full sm:w-auto px-12 py-6 bg-yellow-500 hover:bg-yellow-600 text-black font-black rounded-2xl transition-all duration-300 shadow-[0_0_30px_rgba(234,179,8,0.3)] text-center text-xl hover:scale-110 active:scale-95 flex items-center justify-center gap-4 group opacity-0 translate-y-12"
-            >
-              <span className="text-3xl group-hover:rotate-12 transition-transform">🎟️</span>
-              Book Movie Tickets
-            </Link>
-            <Link 
-              ref={parkingBtnRef}
-              to="/parking" 
-              className="w-full sm:w-auto px-12 py-6 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-2xl transition-all duration-300 shadow-[0_0_30px_rgba(37,99,235,0.3)] text-center text-xl hover:scale-110 active:scale-95 flex items-center justify-center gap-4 group opacity-0 translate-y-12"
-            >
-              <span className="text-3xl group-hover:rotate-12 transition-transform">🅿️</span>
-              Parking Ticket Booking
-            </Link>
-          </div>
         </div>
       </div>
     </div>

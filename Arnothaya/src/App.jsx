@@ -11,15 +11,44 @@ import ParticleBackground from './ParticleBackground';
 function App() {
   return (
     <Router>
-      <ParticleBackground />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/ourservices" element={<OurServices />} />
-        <Route path="/booktickets" element={<BookTickets />} />
-        <Route path="/parking" element={<ParkingTicket />} />
-        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/" element={
+          <>
+            <ParticleBackground />
+            <Home />
+          </>
+        } />
+        <Route path="/home" element={
+          <>
+            <ParticleBackground />
+            <Home />
+          </>
+        } />
+        <Route path="/about" element={
+          <>
+            <ParticleBackground />
+            <About />
+          </>
+        } />
+        <Route path="/ourservices" element={
+          <>
+            <ParticleBackground />
+            <OurServices />
+          </>
+        } />
+         <Route path="/booktickets" element={<BookTickets />} />
+        <Route path="/parkingticket" element={
+          <>
+            <ParticleBackground />
+            <ParkingTicket />
+          </>
+        } />
+        <Route path="/contact" element={
+          <>
+            <ParticleBackground />
+            <ContactUs />
+          </>
+        } />
       </Routes>
     </Router>
   );

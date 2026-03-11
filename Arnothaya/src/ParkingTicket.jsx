@@ -16,6 +16,8 @@ function ParkingTicket() {
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
   const [bookingDetails, setBookingDetails] = useState(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [navbarVisible, setNavbarVisible] = useState(true);
+  const lastScrollY = useRef(0);
 
   const heroRef = useRef(null);
   const contentRef = useRef(null);
@@ -28,6 +30,22 @@ function ParkingTicket() {
       { opacity: 0, y: -50 }, 
       { opacity: 1, y: 0, duration: 1.2, ease: "power4.out" }
     );
+
+    // Navbar scroll behavior - only show when at top
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY <= 100) {
+        setNavbarVisible(true);
+      } else {
+        setNavbarVisible(false);
+      }
+      
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Staggered Vehicle Entrance
@@ -87,9 +105,11 @@ function ParkingTicket() {
   };
 
   const navItems = [
-    { name: 'Home', page: 'home', icon: <Home className="w-5 h-5 md:w-6 md:h-6" /> },
-    { name: 'About', page: 'about', icon: <Info className="w-5 h-5 md:w-6 md:h-6" /> },
-    { name: 'Contact Us', page: 'contact', icon: <Phone className="w-5 h-5 md:w-6 md:h-6" /> }
+    { name: 'Home', page: 'home' },
+    { name: 'About Us', page: 'about' },
+    { name: 'Our Services', page: 'ourservices' },
+    { name: 'Book Tickets', page: 'booktickets' },
+    { name: 'Contact Us', page: 'contact' }
   ];
 
   const vehicleTypes = [
@@ -189,40 +209,44 @@ function ParkingTicket() {
 
   return (
     <div className="min-h-screen bg-transparent text-white selection:bg-yellow-400 selection:text-black">
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md py-3 transition-all print:hidden">
+      <nav className={`fixed top-0 left-0 right-0 z-50 py-4 bg-white/90 backdrop-blur-sm shadow-md print:hidden transition-transform duration-300 ${navbarVisible ? 'translate-y-0' : '-translate-y-full'}`}>
         <div className="px-6 flex items-center justify-between max-w-7xl mx-auto">
           <div className="flex items-center">
-            <img src={logo} alt="Logo" className="h-10 w-auto" />
+            <img src={logo} alt="Logo" className="h-10 md:h-12 w-auto transition-transform duration-300 hover:scale-105" />
           </div>
-          <div className="flex items-center gap-6 flex-wrap justify-center">
+          <div className="flex items-center gap-2 md:gap-8">
             {navItems.map((item) => (
               <Link 
                 key={item.page} 
                 to={'/' + item.page} 
-                className="text-white hover:text-yellow-400 font-bold transition-all duration-300 flex items-center gap-2"
+                className="px-4 py-2 text-gray-800 hover:text-gray-600 font-semibold transition-all duration-300 text-sm md:text-base uppercase tracking-widest"
               >
-                <span>{item.icon}</span>
-                <span className="hidden sm:inline">{item.name}</span>
+                {item.name}
               </Link>
             ))}
-            <Link 
-              to="/booktickets"
-              className="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-black rounded-xl transition-all duration-300 transform hover:scale-110 flex items-center gap-2 shadow-lg shadow-red-600/20"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              <span className="hidden sm:inline">Back</span>
-            </Link>
           </div>
         </div>
       </nav>
 
-      <div ref={heroRef} className="relative pt-32 pb-8 overflow-hidden print:hidden text-center">
-        <div className="inline-block px-4 py-1.5 bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 rounded-full text-xs font-black uppercase tracking-widest mb-6 shadow-[0_0_20px_rgba(234,179,8,0.2)]">
-          Secure Terminal
+      <div ref={heroRef} className="relative h-[60vh] flex items-center justify-center overflow-hidden print:hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 h-[60vh] bg-gray-900">
+          <img 
+            src={parking} 
+            alt="Parking Ticket" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent"></div>
         </div>
-        <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-linear-to-r from-yellow-400 to-red-600 uppercase italic tracking-tighter animatePulseGlow">
-          Parking Spot
-        </h1>
+        
+        <div className="relative z-10 text-center">
+          <div className="inline-block px-4 py-1.5 bg-white/10 border border-white/30 text-white rounded-full text-xs font-black uppercase tracking-widest mb-6">
+            Secure Terminal
+          </div>
+          <h1 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter">
+            Parking Spot
+          </h1>
+        </div>
       </div>
 
       <div ref={contentRef} className="py-12 px-6 max-w-6xl mx-auto">

@@ -54,8 +54,7 @@ const ParticleBackground = () => {
     let animationId;
 
     const render = () => {
-      ctx.fillStyle = '#000000';
-      ctx.fillRect(0, 0, width, height);
+      ctx.clearRect(0, 0, width, height);
 
       flakes.forEach((flake) => {
         flake.update();
