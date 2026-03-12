@@ -5,6 +5,7 @@ import { Home, Info, Phone, Wrench } from 'lucide-react';
 import logo from './assets/logo.png';
 import mall from './assets/mall.png';
 import food from './assets/food.png';
+import dining from './assets/dining.png';
 import rest from './assets/rest.png';
 import movie from './assets/move.png';
 import playImg from './assets/Play.png';
@@ -12,7 +13,7 @@ import ticket from './assets/ticket.png';
 import shop from './assets/shop.png';
 import parking from './assets/parking.png';
 import gaming from './assets/entry.png';
-import salon from './assets/head.png';
+import spa from './assets/spa.png';
 import gamingZone from './assets/gaming_zone.png';
 
 function OurServices() {
@@ -82,10 +83,17 @@ function OurServices() {
     },
     { 
       title: 'Salon & Spa', 
-      img: salon, 
+      img: spa, 
       desc: 'Indulge in a world-class relaxation experience. Our professional therapists and stylists offer premium grooming, therapeutic massages, and complete makeover services.',
       timing: '10:00 AM - 08:30 PM',
       highlights: ['Professional Grooming', 'Therapeutic Massage', 'Expert Hair Styling', 'Refreshing Spa Treatments', 'Aromatherapy Sessions', 'Bridal & Groom Packages']
+    },
+    { 
+      title: 'Dining Spot', 
+      img: dining, 
+      desc: 'Experience a culinary journey with our diverse dining options. From casual cafes to fine dining restaurants, we offer an array of cuisines to satisfy every palate.',
+      timing: '10:00 AM - 11:00 PM',
+      highlights: ['Multi-cuisine Restaurants', 'Fine Dining Experience', 'Casual Cafes', 'Gourmet Food Court', 'Live Kitchen', 'Vegetarian & Vegan Options']
     }
   ];
 
@@ -231,20 +239,13 @@ function OurServices() {
                 Get your tickets now and enjoy a seamless entertainment experience
               </p>
             </div>
-            <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
+            <div className="flex justify-center items-center">
               <Link 
                 to="/booktickets" 
                 className="px-12 py-6 bg-green-700 hover:bg-green-800 text-white font-bold text-xl uppercase tracking-widest rounded-lg shadow-lg transition-all duration-300 hover:scale-105 flex items-center gap-3"
               >
-                <span className="text-2xl">🎬</span>
-                Movie Tickets
-              </Link>
-              <Link 
-                to="/parkingticket" 
-                className="px-12 py-6 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xl uppercase tracking-widest rounded-lg shadow-lg transition-all duration-300 hover:scale-105 flex items-center gap-3"
-              >
-                <span className="text-2xl">🅿️</span>
-                Parking Tickets
+                <span className="text-2xl">🎟️</span>
+                Book Ticket
               </Link>
             </div>
           </div>

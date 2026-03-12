@@ -556,7 +556,7 @@ function BookTickets() {
           <div className="max-w-4xl mx-auto">
             <button 
               onClick={() => changeStep(1)} 
-              className="px-6 py-2 bg-white/5 hover:bg-white/10 text-white font-bold rounded-xl mb-8 flex items-center gap-2 transition-all"
+              className="px-6 py-2 bg-white hover:bg-gray-100 text-gray-900 font-bold rounded-xl mb-8 flex items-center gap-2 transition-all"
             >
               <span>←</span> Back to Movies
             </button>

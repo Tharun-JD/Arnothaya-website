@@ -45,7 +45,6 @@ function App() {
         } />
         <Route path="/contact" element={
           <>
-            <ParticleBackground />
             <ContactUs />
           </>
         } />

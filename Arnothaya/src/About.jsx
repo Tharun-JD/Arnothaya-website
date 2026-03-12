@@ -40,7 +40,7 @@ function About() {
       </nav>
 
       {/* Hero Section */}
-      <div className="relative min-h-screen flex items-center justify-center">
+      <div className="relative min-h-screen flex flex-col justify-between">
         {/* Background Image */}
         <div className="absolute inset-0 h-screen bg-gray-900">
           <img 
@@ -52,17 +52,49 @@ function About() {
         </div>
         
         {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
-          <div className="max-w-2xl">
-            <h1 className="text-2xl md:text-2xl font-light text-yellow-40 mb-8 leading-relaxed">
-              
-            </h1>
+        <div className="relative z-10 flex-grow flex items-center">
+          <div className="max-w-7xl mx-auto px-6 w-full">
+            <div className="max-w-3xl">
+              <h1 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-relaxed">
+                Welcome to Arnothaya
+              </h1>
+              <p className="text-xl md:text-2xl font-light text-yellow-400 mb-12 leading-relaxed">
+                Where Entertainment Meets Excellence
+              </p>
+              <p className="text-lg md:text-xl text-white/90 mb-6 leading-relaxed max-w-2xl">
+                Experience the future of entertainment at Arnothaya - your premier destination for movies, gaming, dining, and shopping under one roof.
+              </p>
+              <p className="text-lg md:text-xl text-white/90 mb-8 leading-relaxed max-w-2xl">
+                Step into a world of cinematic excellence with our state-of-the-art multiplex, featuring 5 screens with 4K laser projection and Dolby Atmos sound. Indulge in thrilling gaming adventures, savor delicious cuisines from around the world, and explore a wide range of shopping options.
+              </p>
+              <p className="text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl">
+                At Arnothaya, we believe in creating unforgettable experiences for every visitor. From the moment you enter, you'll be surrounded by world-class amenities, warm hospitality, and a vibrant atmosphere that makes every visit special.
+              </p>
+            </div>
           </div>
+        </div>
+
+        {/* Scroll Button - Bottom Center */}
+        <div className="relative z-10 pb-8 flex justify-center">
+          <button 
+            onClick={() => {
+              const statisticsSection = document.querySelector('.statistics-section');
+              if (statisticsSection) {
+                statisticsSection.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="p-4 bg-white/20 hover:bg-white/30 rounded-full backdrop-blur-sm transition-all duration-300 transform hover:scale-110"
+            aria-label="Scroll down"
+          >
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </button>
         </div>
       </div>
 
       {/* Statistics Section */}
-      <div className="bg-white py-12 px-6">
+      <div className="statistics-section bg-white py-12 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
@@ -181,6 +213,8 @@ function About() {
           </div>
         </div>
       </div>
+
+
 
       {/* Our Services Section */}
       <div className="bg-gray-50 py-24 px-6">

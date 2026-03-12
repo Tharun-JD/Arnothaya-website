@@ -36,8 +36,7 @@ function ContactUs() {
     { name: 'Home', page: 'home' },
     { name: 'About Us', page: 'about' },
     { name: 'Our Services', page: 'ourservices' },
-    { name: 'Book Tickets', page: 'booktickets' },
-    { name: 'Parking', page: 'parkingticket' }
+    { name: 'Book Tickets', page: 'booktickets' }
   ];
 
   return (
@@ -58,23 +57,17 @@ function ContactUs() {
                 {item.name}
               </Link>
             ))}
-            <Link 
-              to="/booktickets"
-              className="px-8 py-3 bg-green-700 hover:bg-green-800 text-white font-bold transition-all duration-300 text-sm md:text-base uppercase tracking-widest"
-            >
-              Book Now
-            </Link>
           </div>
         </div>
       </nav>
 
-      <div className="min-h-screen relative flex items-center pt-32 pb-12">
-        {/* Background Image */}
-        <div className="absolute inset-0 h-screen bg-gray-900">
+      <div className="min-h-screen bg-white text-gray-900 relative flex items-center pt-32 pb-12">
+        {/* Background Image - Reduced Size */}
+        <div className="absolute inset-0 h-[50vh] bg-gray-900">
           <img 
             src={mall} 
             alt="Contact Us" 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover opacity-50"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent"></div>
         </div>
@@ -227,3 +220,4 @@ function ContactUs() {
 }
 
 export default ContactUs;
+
