@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Plus, X, Car, Bike, Truck, Check } from 'lucide-react';
+import logo from './new_assets/logo.png';
 
 const BookTickets = () => {
   const navigate = useNavigate();
@@ -9,6 +11,13 @@ const BookTickets = () => {
   const [selectedHall, setSelectedHall] = useState('Dolby Atmos');
   const [selectedDate, setSelectedDate] = useState('2026-03-15');
   const [hoveredSeat, setHoveredSeat] = useState(null);
+  
+  // Vehicle state
+  const [vehicles, setVehicles] = useState([
+    { id: 1, type: 'car', model: 'Toyota Camry', number: 'KA 01 AB 1234' }
+  ]);
+  const [showAddVehicle, setShowAddVehicle] = useState(false);
+  const [newVehicle, setNewVehicle] = useState({ type: 'car', model: '', number: '' });
 
   // Generate seat layout
   const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
@@ -46,6 +55,27 @@ const BookTickets = () => {
   const screens = ['Screen 1', 'Screen 2', 'Screen 3', 'Screen 4', 'Screen 5'];
   const hallTypes = ['Dolby Atmos', 'IMAX', '4DX', 'Standard'];
 
+  // Vehicle functions
+  const getVehicleIcon = (type) => {
+    switch (type) {
+      case 'bike': return <Bike className="w-5 h-5" />;
+      case 'truck': return <Truck className="w-5 h-5" />;
+      default: return <Car className="w-5 h-5" />;
+    }
+  };
+
+  const addVehicle = () => {
+    if (newVehicle.model && newVehicle.number) {
+      setVehicles([...vehicles, { ...newVehicle, id: vehicles.length + 1 }]);
+      setNewVehicle({ type: 'car', model: '', number: '' });
+      setShowAddVehicle(false);
+    }
+  };
+
+  const deleteVehicle = (id) => {
+    setVehicles(vehicles.filter(v => v.id !== id));
+  };
+
   return (
     <div className="min-h-screen bg-gradient-premium relative overflow-hidden">
       {/* Background Effects */}
@@ -61,7 +91,7 @@ const BookTickets = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
             <div className="w-12 h-12 rounded-xl bg-gradient-gold flex items-center justify-center overflow-hidden">
-              <img src="/src/assets/logo.png" alt="Logo" className="w-10 h-10 object-contain" />
+               <img src={logo} alt="Logo" className="w-10 h-10 object-contain" />
             </div>
             <div>
               <h1 className="text-xl font-bold text-white font-montserrat">Arnothaya Mall</h1>
@@ -398,8 +428,143 @@ const BookTickets = () => {
                 ))}
               </div>
 
-              {/* Empty State Card */}
-              <div className="glass-card p-8 text-center">
+              {/* Vehicle Section - Shows when vehicles exist */}
+              {vehicles.length > 0 && !showAddVehicle ? (
+                <div className="glass-card p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-white font-montserrat">My Vehicles</h3>
+                    <button 
+                      onClick={() => setShowAddVehicle(true)}
+                      className="flex items-center gap-1 text-gold text-sm hover:text-gold/80 transition-colors"
+                    >
+                      <Plus className="w-4 h-4" />
+                      Add More
+                    </button>
+                  </div>
+                  
+                  {/* Vehicle List */}
+                  <div className="space-y-3">
+                    {vehicles.map((vehicle) => (
+                      <div 
+                        key={vehicle.id}
+                        className="flex items-center justify-between bg-white/5 p-3 rounded-xl border border-white/10"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-lg bg-gold/20 flex items-center justify-center text-gold">
+                            {getVehicleIcon(vehicle.type)}
+                          </div>
+                          <div>
+                            <p className="text-white text-sm font-medium">{vehicle.model}</p>
+                            <p className="text-gray-400 text-xs">{vehicle.number}</p>
+                          </div>
+                        </div>
+                        <button 
+                          onClick={() => deleteVehicle(vehicle.id)}
+                          className="text-gray-500 hover:text-red-400 transition-colors p-2"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Parking Slot Selection */}
+                  <div className="mt-6 pt-4 border-t border-white/10">
+                    <h4 className="text-sm text-gray-400 mb-3">Select Parking Slot</h4>
+                    <div className="grid grid-cols-4 gap-2">
+                      {['P1', 'P2', 'P3', 'P4'].map((slot) => (
+                        <button
+                          key={slot}
+                          className="py-2 px-3 rounded-lg bg-white/5 border border-white/10 text-gray-300 text-sm hover:border-gold/50 hover:text-gold transition-all"
+                        >
+                          {slot}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <button 
+                    onClick={() => alert('Proceeding to Payment...')}
+                    className="w-full mt-6 py-3 bg-gradient-gold rounded-xl text-primary-dark font-bold hover:shadow-lg hover:shadow-gold/30 transition-all duration-300 flex items-center justify-center gap-2"
+                  >
+                    <span>Book Parking</span>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </button>
+                </div>
+              ) : showAddVehicle ? (
+                /* Add Vehicle Form */
+                <div className="glass-card p-6">
+                  <h3 className="text-lg font-semibold text-white mb-4 font-montserrat">Add New Vehicle</h3>
+                  
+                  {/* Vehicle Type */}
+                  <div className="mb-4">
+                    <label className="text-sm text-gray-400 mb-2 block">Vehicle Type</label>
+                    <div className="flex gap-2">
+                      {['car', 'bike', 'truck'].map((type) => (
+                        <button
+                          key={type}
+                          onClick={() => setNewVehicle({ ...newVehicle, type })}
+                          className={`flex-1 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition-all ${
+                            newVehicle.type === type
+                              ? 'bg-gold text-primary-dark'
+                              : 'bg-white/5 border border-white/10 text-gray-300 hover:border-gold/50'
+                          }`}
+                        >
+                          {type === 'car' && <Car className="w-4 h-4" />}
+                          {type === 'bike' && <Bike className="w-4 h-4" />}
+                          {type === 'truck' && <Truck className="w-4 h-4" />}
+                          {type.charAt(0).toUpperCase() + type.slice(1)}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Model Input */}
+                  <div className="mb-4">
+                    <label className="text-sm text-gray-400 mb-2 block">Model Name</label>
+                    <input
+                      type="text"
+                      value={newVehicle.model}
+                      onChange={(e) => setNewVehicle({ ...newVehicle, model: e.target.value })}
+                      placeholder="e.g., Honda City"
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white focus:border-gold/50 focus:outline-none transition-all"
+                    />
+                  </div>
+
+                  {/* Number Input */}
+                  <div className="mb-6">
+                    <label className="text-sm text-gray-400 mb-2 block">Vehicle Number</label>
+                    <input
+                      type="text"
+                      value={newVehicle.number}
+                      onChange={(e) => setNewVehicle({ ...newVehicle, number: e.target.value })}
+                      placeholder="e.g., KA 01 AB 1234"
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white focus:border-gold/50 focus:outline-none transition-all"
+                    />
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => setShowAddVehicle(false)}
+                      className="flex-1 py-3 bg-white/5 border border-white/10 text-gray-300 rounded-xl font-medium hover:bg-white/10 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={addVehicle}
+                      className="flex-1 py-3 bg-gradient-gold rounded-xl text-primary-dark font-bold hover:shadow-lg hover:shadow-gold/30 transition-all flex items-center justify-center gap-2"
+                    >
+                      <Check className="w-4 h-4" />
+                      Add
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                /* Empty State Card */
+                <div className="glass-card p-8 text-center">
                 {/* Car Icon with Disabled Symbol */}
                 <div className="relative w-32 h-32 mx-auto mb-6">
                   <div className="w-32 h-32 rounded-full bg-white/5 flex items-center justify-center">
@@ -425,7 +590,10 @@ const BookTickets = () => {
                 </p>
 
                 {/* Primary Button */}
-                <button className="px-6 py-3 bg-gradient-gold rounded-xl text-primary-dark font-bold hover:shadow-lg hover:shadow-gold/30 transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-2 mx-auto">
+                <button 
+                  onClick={() => setShowAddVehicle(true)}
+                  className="px-6 py-3 bg-gradient-gold rounded-xl text-primary-dark font-bold hover:shadow-lg hover:shadow-gold/30 transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-2 mx-auto"
+                >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                   </svg>
@@ -438,7 +606,7 @@ const BookTickets = () => {
                     Skip Parking
                   </button>
                 </div>
-              </div>
+              </div>)}
             </div>
 
           </div>

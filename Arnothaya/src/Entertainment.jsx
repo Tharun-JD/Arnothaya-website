@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import logo from './new_assets/logo.png';
 
 const Entertainment = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -62,13 +63,16 @@ const Entertainment = () => {
         borderBottom: '1px solid rgba(0, 245, 255, 0.2)'
       }}>
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <Link to="/" className="text-2xl font-bold" style={{
-            fontFamily: 'Montserrat, sans-serif',
-            background: 'linear-gradient(135deg, #00f5ff, #ff00ff)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
-          }}>
-            ARNOTHAYA MALL
+           <Link to="/" className="flex items-center gap-2">
+            <img src={logo} alt="Arnothaya Mall" className="h-10 w-auto" />
+            <span className="text-2xl font-bold" style={{
+              fontFamily: 'Montserrat, sans-serif',
+              background: 'linear-gradient(135deg, #00f5ff, #ff00ff)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }}>
+              ARNOTHAYA MALL
+            </span>
           </Link>
           <div className="flex gap-8">
             {[

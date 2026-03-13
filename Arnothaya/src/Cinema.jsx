@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import logo from './assets/logo.png';
-import mov from './assets/mov.png';
+import logo from './new_assets/logo.png';
+import mov from './new_assets/mov.png';
 
 // SVG Icons
 const SearchIcon = () => (
@@ -66,17 +66,16 @@ const ClockIcon = () => (
 
 // Movie Card Component
 function MovieCard({ movie, index }) {
+  const firstLetter = movie.title.charAt(0).toUpperCase();
   return (
     <div 
       className="glass-card overflow-hidden group cursor-pointer animate-scale-in"
       style={{ animationDelay: `${index * 100}ms` }}
     >
-      <div className="relative h-80 overflow-hidden">
-        <img 
-          src={movie.poster} 
-          alt={movie.title} 
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-        />
+      <div className="relative h-80 overflow-hidden flex items-center justify-center bg-gradient-to-br from-[#1a2a4a] to-[#0a1628]">
+        <div className="text-9xl font-bold text-[#d4af37] opacity-80 group-hover:scale-110 transition-transform duration-500">
+          {firstLetter}
+        </div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-transparent to-transparent"></div>
         <div className="absolute top-3 right-3 px-3 py-1 bg-[#d4af37]/90 text-[#0a1628] text-xs font-bold rounded-full">
           {movie.rating}

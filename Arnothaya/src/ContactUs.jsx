@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import logo from './new_assets/logo.png';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -71,9 +72,10 @@ const ContactUs = () => {
         borderBottom: '1px solid rgba(212, 175, 55, 0.1)'
       }}>
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <Link to="/" className="text-2xl font-bold gradient-text">
-            ARNOTHAYA MALL
-          </Link>
+           <Link to="/" className="flex items-center gap-2">
+             <img src={logo} alt="Arnothaya Mall" className="h-10 w-auto" />
+             <span className="text-2xl font-bold gradient-text">ARNOTHAYA MALL</span>
+           </Link>
           <div className="flex gap-8">
             {[
               { name: 'Home', path: '/' },

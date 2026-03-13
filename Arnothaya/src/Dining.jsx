@@ -1,10 +1,170 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import logo from './assets/logo.png';
-import dining from './assets/dining.png';
-import food from './assets/food.png';
-import rest from './assets/rest.png';
-import spa from './assets/spa.png';
+import logo from './new_assets/logo.png';
+import dining from './new_assets/Café & Coffee.png';
+import food from './new_assets/food.png';
+import rest from './new_assets/rest.png';
+import spa from './new_assets/spa.png';
+
+// Menu data for restaurants
+const menuData = {
+  'Pizza Hub': [
+    { name: 'Margherita Pizza', price: '₹1,080', description: 'Fresh tomatoes, mozzarella, basil' },
+    { name: 'Pepperoni Pizza', price: '₹1,250', description: 'Classic pepperoni with extra cheese' },
+    { name: 'Veggie Supreme', price: '₹1,165', description: 'Bell peppers, onions, mushrooms, olives' },
+    { name: 'Garlic Bread', price: '₹415', description: 'Crispy bread with garlic butter' },
+    { name: 'Chicken Wings', price: '₹750', description: 'Crispy wings with sauce' },
+    { name: 'BBQ Chicken Pizza', price: '₹1,330', description: 'BBQ sauce, chicken, red onions' },
+    { name: 'Four Cheese Pizza', price: '₹1,415', description: 'Mozzarella, parmesan, gorgonzola, ricotta' },
+    { name: 'Calzone', price: '₹1,000', description: 'Folded pizza with fillings' },
+    { name: 'Mozzarella Sticks', price: '₹580', description: 'Golden fried with marinara' },
+    { name: 'Beverage', price: '₹250', description: 'Soft drink or water' }
+  ],
+  'Burger Barn': [
+    { name: 'Classic Burger', price: '₹915', description: 'Beef patty, lettuce, tomato, onion' },
+    { name: 'Bacon Cheeseburger', price: '₹1,165', description: 'Beef, bacon, cheddar, pickles' },
+    { name: 'Veggie Burger', price: '₹1,000', description: 'Plant-based patty with all the fixings' },
+    { name: 'Loaded Fries', price: '₹580', description: 'Cheese, bacon, jalapeños' },
+    { name: 'Milkshake', price: '₹500', description: 'Chocolate, vanilla, or strawberry' },
+    { name: 'Smash Burger', price: '₹1,080', description: 'Double patty with caramelized onions' },
+    { name: 'Mushroom Swiss Burger', price: '₹1,250', description: 'Sautéed mushrooms, Swiss cheese' },
+    { name: 'Spicy Jalapeño Burger', price: '₹1,165', description: 'Jalapeños, pepper jack, chipotle sauce' },
+    { name: 'Onion Rings', price: '₹500', description: 'Crispy battered onion rings' },
+    { name: 'Apple Pie', price: '₹415', description: 'Warm cinnamon apple pie' }
+  ],
+  'Taco Town': [
+    { name: 'Beef Tacos', price: '₹830', description: 'Seasoned beef, lettuce, cheese, salsa' },
+    { name: 'Chicken Tacos', price: '₹830', description: 'Grilled chicken, pico de gallo, sour cream' },
+    { name: 'Burrito Bowl', price: '₹1,000', description: 'Rice, beans, protein, toppings' },
+    { name: 'Nachos Grande', price: '₹750', description: 'Chips, cheese, jalapeños, guacamole' },
+    { name: 'Quesadilla', price: '₹915', description: 'Grilled tortilla with cheese and filling' },
+    { name: 'Fish Tacos', price: '₹1,000', description: 'Crispy fish, cabbage slaw, chipotle aioli' },
+    { name: 'Veggie Tacos', price: '₹750', description: 'Grilled vegetables, black beans, corn' },
+    { name: 'Loaded Nachos', price: '₹1,080', description: 'Full nachos with all toppings' },
+    { name: 'Mexican Rice', price: '₹330', description: 'Seasoned tomato rice' },
+    { name: 'Churros', price: '₹500', description: 'Cinnamon sugar churros with chocolate' }
+  ],
+  'Wok & Roll': [
+    { name: 'Fried Rice', price: '₹915', description: 'Egg, vegetables, choice of protein' },
+    { name: 'Chow Mein', price: '₹1,000', description: 'Stir-fried noodles with vegetables' },
+    { name: 'Kung Pao Chicken', price: '₹1,165', description: 'Spicy chicken with peanuts' },
+    { name: 'Spring Rolls', price: '₹500', description: 'Crispy vegetable rolls' },
+    { name: 'Hot & Sour Soup', price: '₹415', description: 'Traditional spicy soup' },
+    { name: 'General Tsos Chicken', price: '₹1,250', description: 'Sweet and spicy crispy chicken' },
+    { name: 'Beef Broccoli', price: '₹1,330', description: 'Tender beef with fresh broccoli' },
+    { name: 'Pad Thai', price: '₹1,165', description: 'Thai stir-fried noodles' },
+    { name: 'Miso Soup', price: '₹330', description: 'Traditional Japanese soup' },
+    { name: 'Edamame', price: '₹415', description: 'Steamed soybeans with sea salt' }
+  ],
+  'Coffee Lounge': [
+    { name: 'Espresso', price: '₹330', description: 'Strong Italian coffee' },
+    { name: 'Cappuccino', price: '₹415', description: 'Espresso with steamed milk foam' },
+    { name: 'Latte', price: '₹415', description: 'Espresso with steamed milk' },
+    { name: 'Croissant', price: '₹330', description: 'Buttery French pastry' },
+    { name: 'Cheesecake', price: '₹580', description: 'New York style cheesecake' },
+    { name: 'Cold Brew', price: '₹415', description: 'Smooth cold-brewed coffee' },
+    { name: 'Hot Chocolate', price: '₹375', description: 'Rich chocolate with whipped cream' },
+    { name: 'Carrot Cake', price: '₹500', description: 'Spiced cake with cream cheese frosting' },
+    { name: 'Blueberry Muffin', price: '₹330', description: 'Fresh baked muffin' },
+    { name: 'Cookie', price: '₹250', description: 'Chocolate chip cookie' }
+  ],
+  'Starbrew Café': [
+    { name: 'Iced Coffee', price: '₹415', description: 'Cold brew with milk' },
+    { name: 'Mocha', price: '₹500', description: 'Chocolate espresso drink' },
+    { name: 'Americano', price: '₹330', description: 'Espresso with hot water' },
+    { name: 'Muffin', price: '₹290', description: 'Blueberry or chocolate chip' },
+    { name: 'Bagel', price: '₹330', description: 'Toasted with cream cheese' },
+    { name: 'Caramel Macchiato', price: '₹500', description: 'Espresso with vanilla and caramel' },
+    { name: 'Green Tea Latte', price: '₹415', description: 'Matcha with steamed milk' },
+    { name: 'Scone', price: '₹330', description: 'Butter scone with jam' },
+    { name: 'Brownie', price: '₹375', description: 'Fudgy chocolate brownie' },
+    { name: 'Frappuccino', price: '₹500', description: 'Blended ice coffee drink' }
+  ],
+  'Espresso Express': [
+    { name: 'Quick Coffee', price: '₹250', description: 'Fast and delicious' },
+    { name: 'Iced Latte', price: '₹375', description: 'Cold milk with espresso' },
+    { name: 'Flat White', price: '₹375', description: 'Smooth espresso with microfoam' },
+    { name: 'Sandwich', price: '₹580', description: 'Turkey, ham, or veggie' },
+    { name: 'Cookie', price: '₹210', description: 'Chocolate chip or oatmeal' },
+    { name: 'Doppio', price: '₹290', description: 'Double espresso' },
+    { name: 'Cortado', price: '₹330', description: 'Equal parts espresso and milk' },
+    { name: 'Wrap', price: '₹665', description: 'Chicken or vegetable wrap' },
+    { name: 'Danish', price: '₹290', description: 'Cheese or fruit Danish' },
+    { name: 'Biscotti', price: '₹250', description: 'Italian almond biscuit' }
+  ],
+  'Fine Dining Restaurant': [
+    { name: 'Filet Mignon', price: '₹3,580', description: '8oz premium beef tenderloin' },
+    { name: 'Lobster Thermidor', price: '₹3,830', description: 'Classic French lobster dish' },
+    { name: 'Duck Confit', price: '₹2,915', description: 'Slow-cooked duck leg' },
+    { name: 'Caesar Salad', price: '₹1,250', description: 'Romaine, parmesan, croutons' },
+    { name: 'Tiramisu', price: '₹1,080', description: 'Italian coffee dessert' },
+    { name: 'Wagyu Steak', price: '₹7,165', description: 'Premium Japanese wagyu beef' },
+    { name: 'Risotto', price: '₹2,080', description: 'Creamy mushroom risotto' },
+    { name: 'Lamb Chops', price: '₹3,250', description: 'Herb-crusted rack of lamb' },
+    { name: 'Soup of the Day', price: '₹830', description: 'Ask your server' },
+    { name: 'Crème Brûlée', price: '₹1,000', description: 'Classic French custard dessert' }
+  ],
+  'The Steakhouse': [
+    { name: 'Ribeye Steak', price: '₹3,250', description: '12oz premium ribeye' },
+    { name: 'New York Strip', price: '₹3,080', description: '10oz classic cut' },
+    { name: 'Tomahawk Steak', price: '₹5,500', description: '32oz shareable steak' },
+    { name: 'Loaded Baked Potato', price: '₹750', description: 'Butter, sour cream, cheese' },
+    { name: 'Caesar Salad', price: '₹1,080', description: 'House-made dressing' },
+    { name: 'Porterhouse', price: '₹4,415', description: '16oz bone-in cut' },
+    { name: 'Truffle Fries', price: '₹830', description: 'Truffle oil and parmesan' },
+    { name: 'Grilled Salmon', price: '₹2,750', description: 'Atlantic salmon with lemon butter' },
+    { name: 'Creamed Spinach', price: '₹665', description: 'Classic steakhouse side' },
+    { name: 'Chocolate Fondant', price: '₹1,165', description: 'Warm chocolate cake' }
+  ],
+  'Ocean Catch': [
+    { name: 'Grilled Salmon', price: '₹2,750', description: 'Atlantic salmon with herbs' },
+    { name: 'Lobster Tail', price: '₹4,080', description: 'Butter-poached lobster' },
+    { name: 'Seafood Platter', price: '₹4,665', description: 'Shrimp, crab, lobster, fish' },
+    { name: 'Clam Chowder', price: '₹1,080', description: 'New England style' },
+    { name: 'Garlic Shrimp', price: '₹2,415', description: 'Jumbo shrimp in garlic butter' },
+    { name: 'Fish & Chips', price: '₹1,915', description: 'Beer-battered cod with fries' },
+    { name: 'Crab Cakes', price: '₹2,250', description: 'Maryland style crab cakes' },
+    { name: 'Lobster Bisque', price: '₹1,250', description: 'Rich and creamy soup' },
+    { name: 'Coconut Prawns', price: '₹2,080', description: 'Crispy prawns with sweet chili' },
+    { name: 'Key Lime Pie', price: '₹915', description: 'Tangy citrus dessert' }
+  ],
+  'Spice Garden': [
+    { name: 'Butter Chicken', price: '₹1,580', description: 'Creamy tomato curry' },
+    { name: 'Biryani', price: '₹1,415', description: 'Aromatic rice with spices' },
+    { name: 'Tandoori Chicken', price: '₹1,500', description: 'Clay oven roasted' },
+    { name: 'Samosas', price: '₹665', description: 'Crispy pastries with filling' },
+    { name: 'Naan Bread', price: '₹330', description: 'Freshly baked flatbread' },
+    { name: 'Palak Paneer', price: '₹1,330', description: 'Spinach and cottage cheese curry' },
+    { name: 'Chicken Tikka Masala', price: '₹1,580', description: 'Roasted chicken in creamy sauce' },
+    { name: 'Dal Makhani', price: '₹1,250', description: 'Slow-cooked black lentils' },
+    { name: 'Garlic Naan', price: '₹415', description: 'Naan with garlic butter' },
+    { name: 'Mango Lassi', price: '₹415', description: 'Sweet yogurt drink' }
+  ],
+  'Dessert Bar': [
+    { name: 'Ice Cream Sundae', price: '₹750', description: 'Three scoops with toppings' },
+    { name: 'Chocolate Lava Cake', price: '₹915', description: 'Warm molten chocolate' },
+    { name: 'Cheesecake', price: '₹830', description: 'Creamy New York style' },
+    { name: 'Waffle Sundae', price: '₹1,000', description: 'Waffle with ice cream' },
+    { name: 'Fruit Parfait', price: '₹665', description: 'Fresh fruits with yogurt' },
+    { name: 'Brownie Sundae', price: '₹1,080', description: 'Warm brownie with ice cream' },
+    { name: 'Pancakes', price: '₹915', description: 'Fluffy pancakes with maple syrup' },
+    { name: 'Crepes', price: '₹830', description: 'Sweet crepes with Nutella' },
+    { name: 'Milkshake', price: '₹665', description: 'Thick and creamy shake' },
+    { name: 'Affogato', price: '₹580', description: 'Ice cream with espresso' }
+  ],
+  'Sweet Dreams': [
+    { name: 'Box of Chocolates', price: '₹2,080', description: 'Assorted premium chocolates' },
+    { name: 'Truffles', price: '₹1,580', description: 'Hand-rolled chocolate truffles' },
+    { name: 'Macarons', price: '₹1,330', description: 'French almond cookies' },
+    { name: 'Chocolate Bark', price: '₹1,080', description: 'Chocolate with toppings' },
+    { name: 'Gift Box', price: '₹2,500', description: 'Assorted confections' },
+    { name: 'Dark Chocolate Collection', price: '₹1,915', description: 'Premium dark chocolates' },
+    { name: 'White Chocolate variety', price: '₹1,665', description: 'Creamy white chocolates' },
+    { name: 'Seasonal Specials', price: '₹1,415', description: 'Ask for current offerings' },
+    { name: 'Chocolate Covered Fruits', price: '₹1,250', description: 'Strawberries, oranges, cherries' },
+    { name: 'Candy Jar', price: '₹750', description: 'Pick your own mix' }
+  ]
+};
 
 // SVG Icons
 const SearchIcon = () => (
@@ -82,7 +242,7 @@ const CakeIcon = () => (
 );
 
 // Restaurant Card Component
-function RestaurantCard({ restaurant, index }) {
+function RestaurantCard({ restaurant, index, onViewMenu }) {
   const getIcon = (type) => {
     switch(type.toLowerCase()) {
       case 'pizza': return <UtensilsIcon />;
@@ -92,18 +252,17 @@ function RestaurantCard({ restaurant, index }) {
       default: return <UtensilsIcon />;
     }
   };
+  const firstLetter = restaurant.name.charAt(0).toUpperCase();
 
   return (
     <div 
       className="glass-card overflow-hidden group cursor-pointer animate-scale-in"
       style={{ animationDelay: `${index * 100}ms` }}
     >
-      <div className="relative h-56 overflow-hidden">
-        <img 
-          src={restaurant.image} 
-          alt={restaurant.name} 
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-        />
+      <div className="relative h-56 overflow-hidden flex items-center justify-center bg-gradient-to-br from-[#1a2a4a] to-[#0a1628]">
+        <div className="text-8xl font-bold text-[#d4af37] opacity-80 group-hover:scale-110 transition-transform duration-500">
+          {firstLetter}
+        </div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-transparent to-transparent"></div>
         <div className="absolute top-3 right-3 px-3 py-1 bg-[#d4af37]/90 text-[#0a1628] text-xs font-bold rounded-full">
           {restaurant.rating} ★
@@ -131,7 +290,10 @@ function RestaurantCard({ restaurant, index }) {
           <span>{restaurant.floor}</span>
         </div>
         
-        <button className="w-full py-3 bg-gradient-to-r from-[#d4af37] to-[#aa8c2c] text-[#0a1628] font-semibold text-sm rounded-xl hover:shadow-[0_10px_30px_rgba(212,175,55,0.3)] transition-all duration-300 group-hover:scale-[1.02]">
+        <button 
+          onClick={() => onViewMenu(restaurant)}
+          className="w-full py-3 bg-gradient-to-r from-[#d4af37] to-[#aa8c2c] text-[#0a1628] font-semibold text-sm rounded-xl hover:shadow-[0_10px_30px_rgba(212,175,55,0.3)] transition-all duration-300 group-hover:scale-[1.02]"
+        >
           View Menu
         </button>
       </div>
@@ -142,6 +304,7 @@ function RestaurantCard({ restaurant, index }) {
 function Dining() {
   const [scrolled, setScrolled] = useState(false);
   const [filter, setFilter] = useState('All');
+  const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -395,7 +558,7 @@ function Dining() {
           {/* Restaurant Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredRestaurants.map((restaurant, index) => (
-              <RestaurantCard key={index} restaurant={restaurant} index={index} />
+              <RestaurantCard key={index} restaurant={restaurant} index={index} onViewMenu={setSelectedRestaurant} />
             ))}
           </div>
 
@@ -444,6 +607,51 @@ function Dining() {
           </div>
         </div>
       </footer>
+
+      {/* Menu Modal */}
+      {selectedRestaurant && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div 
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            onClick={() => setSelectedRestaurant(null)}
+          ></div>
+          <div className="relative glass-card max-w-2xl w-full max-h-[80vh] overflow-y-auto animate-scale-in">
+            <div className="sticky top-0 bg-[#0a1628]/95 backdrop-blur-sm p-6 border-b border-white/10 flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-white">{selectedRestaurant.name}</h2>
+                <p className="text-[#d4af37] text-sm">{selectedRestaurant.cuisineType} • {selectedRestaurant.floor}</p>
+              </div>
+              <button 
+                onClick={() => setSelectedRestaurant(null)}
+                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M18 6 6 18"></path>
+                  <path d="m6 6 12 12"></path>
+                </svg>
+              </button>
+            </div>
+            <div className="p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">Menu Items</h3>
+              <div className="space-y-3">
+                {menuData[selectedRestaurant.name] ? (
+                  menuData[selectedRestaurant.name].map((item, index) => (
+                    <div key={index} className="flex items-center justify-between p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-colors">
+                      <div>
+                        <h4 className="text-white font-medium">{item.name}</h4>
+                        <p className="text-white/50 text-sm">{item.description}</p>
+                      </div>
+                      <span className="text-[#d4af37] font-bold">{item.price}</span>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-white/60 text-center py-8">Menu coming soon!</p>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

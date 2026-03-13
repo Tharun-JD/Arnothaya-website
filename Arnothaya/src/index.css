@@ -1,5 +1,5 @@
-/* Premium fonts - Using Poppins and Montserrat - Must be first */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+/* Premium fonts - Using Playfair Display - Must be first */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap');
 
 @import "tailwindcss";
 
@@ -17,18 +17,18 @@
 }
 
 body {
-  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  font-family: 'Lato', system-ui, -apple-system, serif;
   background-color: var(--primary-dark) !important;
   color: white !important;
   overflow-x: hidden;
 }
 
 * {
-  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  font-family: 'Lato', system-ui, -apple-system, serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Montserrat', system-ui, -apple-system, sans-serif !important;
+  font-family: 'Playfair Display', system-ui, -apple-system, serif !important;
 }
 
 /* Glassmorphism Card */
