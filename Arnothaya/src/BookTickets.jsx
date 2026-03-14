@@ -77,7 +77,7 @@ const BookTickets = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-premium relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a0f2e] to-[#0a0a0a] relative overflow-hidden">
       {/* Background Effects */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-gold/5 rounded-full blur-3xl"></div>
@@ -163,9 +163,9 @@ const BookTickets = () => {
               {/* Movie Card */}
               <div className="glass-card p-5">
                 <div className="relative rounded-xl overflow-hidden mb-4 group">
-                  <img 
-                    src="https://images.unsplash.com/photo-1535016120720-40c6874c3b13?w=400&h=600&fit=crop" 
-                    alt="The Batman" 
+                   <img
+                    src="https://images.unsplash.com/photo-1535016120720-40c6874c3b13?w=400&h=600&fit=crop"
+                    alt="The Batman"
                     className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
@@ -338,9 +338,9 @@ const BookTickets = () => {
                 <h3 className="text-lg font-semibold text-white mb-4 font-montserrat">Booking Summary</h3>
 
                 <div className="flex gap-4 mb-4 pb-4 border-b border-white/10">
-                  <img 
-                    src="https://images.unsplash.com/photo-1535016120720-40c6874c3b13?w=200&h=300&fit=crop" 
-                    alt="The Batman" 
+                  <img
+                    src="https://images.unsplash.com/photo-1535016120720-40c6874c3b13?w=200&h=300&fit=crop"
+                    alt="The Batman"
                     className="w-16 h-24 object-cover rounded-lg"
                   />
                   <div className="flex-1">

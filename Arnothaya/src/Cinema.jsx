@@ -232,7 +232,7 @@ function Cinema() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a1628] via-[#0d1b3d] to-[#152238]">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a0f2e] to-[#0a0a0a]">
       {/* Background Effects */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[#d4af37]/5 rounded-full blur-3xl"></div>

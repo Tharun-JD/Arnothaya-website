@@ -195,7 +195,7 @@ function Stores() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a1628] via-[#0d1b3d] to-[#152238]">
+    <div className="min-h-screen bg-gradient-to-br from-[#1a0f2e] via-[#2d1b4e] to-[#1a0f2e]">
       {/* Background Effects */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#d4af37]/5 rounded-full blur-3xl"></div>

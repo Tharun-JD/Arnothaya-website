@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import logo from './new_assets/logo.png';
 import mall from './new_assets/mall.png';
@@ -34,6 +34,53 @@ import dessertBar from './new_assets/Dessert Bar.png';
 import valetService from './new_assets/parking.png';
 import evCharging from './new_assets/parking.png';
 import priorityParking from './new_assets/parking.png';
+
+// Loader Images
+import loader1 from './loader/load1.png';
+import loader2 from './loader/load2.png';
+import loader3 from './loader/load3.png';
+import loader4 from './loader/load4.png';
+import loader5 from './loader/load5.png';
+
+// Lazy Loaded Image Component
+const LazyImage = ({ src, alt, className }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const imgRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsLoaded(true);
+            observer.unobserve(imgRef.current);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (imgRef.current) {
+      observer.observe(imgRef.current);
+    }
+
+    return () => {
+      if (imgRef.current) {
+        observer.unobserve(imgRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <img
+      ref={imgRef}
+      src={isLoaded ? src : null}
+      alt={alt}
+      className={`${className} ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}
+      onLoad={() => setIsLoaded(true)}
+    />
+  );
+};
 
 // SVG Icons
 const SearchIcon = () => (
@@ -88,9 +135,9 @@ function GlassCard({ image, title, description, buttonText, delay }) {
       
       {/* Image Container */}
       <div className="relative h-48 overflow-hidden">
-        <img 
-          src={image} 
-          alt={title} 
+        <LazyImage
+          src={image}
+          alt={title}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-transparent to-transparent"></div>
@@ -155,6 +202,19 @@ function BrandLogo({ name, color }) {
 
 function Home() {
   const [scrolled, setScrolled] = useState(false);
+  const [currentLoaderIndex, setCurrentLoaderIndex] = useState(0);
+  
+  // Loader images array
+  const loaderImages = [loader1, loader2, loader3, loader4, loader5];
+  
+  // Rotate loader image every 40 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentLoaderIndex((prevIndex) => (prevIndex + 1) % loaderImages.length);
+    }, 40000); // 40 seconds = 40000ms
+    
+    return () => clearInterval(interval);
+  }, [loaderImages.length]);
   
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -409,15 +469,21 @@ function Home() {
       {/* Hero Section */}
       <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 h-screen">
-          <img src={mall} alt="Arnothaya Mall" className="w-full h-full object-cover scale-110" />
+          <LazyImage src={mall} alt="Arnothaya Mall" className="w-full h-full object-cover scale-110" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628]/95 via-[#0a1628]/70 to-[#0a1628]/90"></div>
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628]/60 via-transparent to-[#0a1628]/80"></div>
           <div className="absolute top-1/4 left-10 w-96 h-96 bg-[#d4af37]/10 rounded-full blur-3xl"></div>
           <div className="absolute bottom-1/4 right-10 w-64 h-64 bg-[#d4af37]/5 rounded-full blur-3xl"></div>
         </div>
         
-        <div className="absolute bottom-0 right-0 md:right-10 lg:right-20 w-80 md:w-96 hidden md:block">
-          <img src={head} alt="Shopping" className="w-full h-auto object-contain animate-float" />
+        {/* Rotating Loader Image - Changes every 40 seconds */}
+        <div className="absolute bottom-8 right-0 md:right-10 lg:right-20 w-80 md:w-96 hidden md:block z-10">
+          <img 
+            src={loaderImages[currentLoaderIndex]} 
+            alt="Loader" 
+            className="w-full h-auto object-contain animate-bounce-slow rounded-2xl"
+            key={currentLoaderIndex} // Force re-render on index change
+          />
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-20">

@@ -9,66 +9,21 @@ import Dining from './Dining';
 import Entertainment from './Entertainment';
 import Offers from './Offers';
 import BookTickets from './BookTickets';
-import ParticleBackground from './ParticleBackground';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={
-          <>
-            <ParticleBackground />
-            <Home />
-          </>
-        } />
-        <Route path="/home" element={
-          <>
-            <ParticleBackground />
-            <Home />
-          </>
-        } />
-        <Route path="/parkingticket" element={
-          <>
-            <ParticleBackground />
-            <ParkingTicket />
-          </>
-        } />
-        <Route path="/contact" element={
-          <>
-            <ContactUs />
-          </>
-        } />
-        <Route path="/stores" element={
-          <>
-            <Stores />
-          </>
-        } />
-        <Route path="/cinema" element={
-          <>
-            <Cinema />
-          </>
-        } />
-        <Route path="/booktickets" element={
-          <>
-            <BookTickets />
-          </>
-        } />
-        <Route path="/dining" element={
-          <>
-            <Dining />
-          </>
-        } />
-        <Route path="/entertainment" element={
-          <>
-            <Entertainment />
-          </>
-        } />
-        <Route path="/offers" element={
-          <>
-            <ParticleBackground />
-            <Offers />
-          </>
-        } />
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/parkingticket" element={<ParkingTicket />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/stores" element={<Stores />} />
+        <Route path="/cinema" element={<Cinema />} />
+        <Route path="/booktickets" element={<BookTickets />} />
+        <Route path="/dining" element={<Dining />} />
+        <Route path="/entertainment" element={<Entertainment />} />
+        <Route path="/offers" element={<Offers />} />
       </Routes>
     </Router>
   );

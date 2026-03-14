@@ -482,7 +482,7 @@ function Dining() {
     : restaurants.filter(r => r.cuisineType === filter);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a1628] via-[#0d1b3d] to-[#152238]">
+    <div className="min-h-screen bg-gradient-to-br from-[#2e1a0f] via-[#4e1b2d] to-[#2e1a0f]">
       {/* Background Effects */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#d4af37]/5 rounded-full blur-3xl"></div>

@@ -191,11 +191,11 @@ const ParkingTicket = () => {
             {/* Parking Image */}
             <div className="relative rounded-2xl overflow-hidden mb-6 h-48">
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent z-10" />
-              <img 
-                src="https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=800&q=80"
-                alt="Luxury Parking"
-                className="w-full h-full object-cover"
-              />
+               <img
+                    src="https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=800&q=80"
+                    alt="Luxury Parking"
+                    className="w-full h-full object-cover"
+                  />
               <div className="absolute bottom-4 left-4 z-20">
                 <span className="text-white font-medium">Underground Parking - P2</span>
               </div>
